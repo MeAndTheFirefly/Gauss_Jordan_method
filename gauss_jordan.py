@@ -1,12 +1,12 @@
 import numpy as np
 
-matrix = np.array([[1, 1, 1, 5], [2, 3, 5, 8], [4, 0, 5, 2]], dtype=float)
+#matrix = np.array([[1, 1, 1, 5], [2, 3, 5, 8], [4, 0, 5, 2]], dtype=float)
 #matrix = np.array([[1, 2, -3, 2], [6, 3, -9, 6], [7, 14, -21, 13]], dtype=float)
 #matrix = np.array([[2, 6, -2, 3], [4, 8, -5, 4], [0, 4, 1, 2]], dtype=float)
 #matrix = np.array([[0, 4, 1, 2], [2, 6, -2, 3], [4, 8, -5, 4]], dtype=float)
 
 
-def obtain_echelon_form(m):
+def echelon_form_forward(m):
     m = sort_array_de(m)
     i = 0
     j = 0
@@ -23,10 +23,10 @@ def obtain_echelon_form(m):
     return m
 
 
-def backward_sub(m):
+def echelon_form_backward(m):
     i = len(m) - 1
     j = len(m) - 1
-    m = obtain_echelon_form(m)
+    m = echelon_form_forward(m)
 
     if not detect_non_solution(m) and not detect_infinite_solutions(m):
         m[len(m) - 1] /= m[len(m) - 1][m.shape[1] - 2]
@@ -57,7 +57,7 @@ def sort_array_de(m):
 
 
 def reduced_echelon_form(m):
-    m = backward_sub(m)
+    m = echelon_form_backward(m)
     for i in range(len(m) - 1):
         m[i] /= m[i][i]
     return m
@@ -65,7 +65,6 @@ def reduced_echelon_form(m):
 
 print(reduced_echelon_form(matrix))
 
-#print(sort_array_de(matrix))
 
 
 
