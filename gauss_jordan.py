@@ -2,16 +2,19 @@ import numpy as np
 
 #matrix = np.array([[1, 1, 1, 5], [2, 3, 5, 8], [4, 0, 5, 2]], dtype=float)
 #matrix = np.array([[1, 2, -3, 2], [6, 3, -9, 6], [7, 14, -21, 13]], dtype=float)
-matrix = np.array([[2, 6, -2, 3], [4, 8, -5, 4], [0, 4, 1, 2]], dtype=float)
+#matrix = np.array([[2, 6, -2, 3], [4, 8, -5, 4], [0, 4, 1, 2]], dtype=float)
+matrix = np.array([[0, 4, 1, 2], [2, 6, -2, 3], [4, 8, -5, 4]], dtype=float)
 
 
 def obtain_echelon_form(m):
+    m = sort_array_de(m)
     i = 0
     j = 0
     while i < len(m) - 1:
         while j < len(m) - 1:
             if m[j + 1][i] == 0.0:
-                break
+                j += 1
+                continue
             else:
                 # m[j+1] -= m[j+1][i] / m[i][i] * m[i]
                 m[j + 1] = m[j + 1] * m[i][i] - m[i] * m[j + 1][i]
@@ -24,8 +27,7 @@ def obtain_echelon_form(m):
 def reduced_echelon_form(m):
     i = len(m) - 1
     j = len(m) - 1
-
-    obtain_echelon_form(m)
+    m = obtain_echelon_form(m)
 
     if not detect_non_solution(m) and not detect_infinite_solutions(m):
         m[len(m) - 1] /= m[len(m) - 1][m.shape[1] - 2]
@@ -51,7 +53,12 @@ def detect_infinite_solutions(m):
     return any(np.array_equal(row[:m.shape[1]], [0.] * (m.shape[1])) for row in m)
 
 
+def sort_array_de(m):
+    return m[m[:, 0].argsort()[::-1]]
+
+
 print(reduced_echelon_form(matrix))
+#print(sort_array_de(matrix))
 
 
 
