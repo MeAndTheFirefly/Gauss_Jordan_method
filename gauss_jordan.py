@@ -4,6 +4,8 @@ import numpy as np
 #matrix = np.array([[1, 2, -3, 2], [6, 3, -9, 6], [7, 14, -21, 13]], dtype=float)
 #matrix = np.array([[2, 6, -2, 3], [4, 8, -5, 4], [0, 4, 1, 2]], dtype=float)
 #matrix = np.array([[0, 4, 1, 2], [2, 6, -2, 3], [4, 8, -5, 4]], dtype=float)
+matrix = np.array([[1, 1, 2, 0, 1], [2, -1, 0, 1, -2], [1, -1, -1, -2, 4], [2, -1, 2, -1, 0]], dtype=float)
+#matrix = np.array([[6, -5, 22], [0, 1, -8]], dtype=float)
 
 
 def echelon_form_forward(m):
@@ -16,6 +18,9 @@ def echelon_form_forward(m):
                 j += 1
                 continue
             else:
+                while m[i][i] == 0.0:
+                    m = np.append(m, [m[i]], 0)
+                    m = np.delete(m, i, 0)       # handle zero multiplicand case
                 m[j + 1] = m[j + 1] * m[i][i] - m[i] * m[j + 1][i]
                 j += 1
         i += 1
