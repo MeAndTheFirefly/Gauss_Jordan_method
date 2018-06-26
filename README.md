@@ -1,2 +1,2 @@
 # Gauss_Jordan_method
-Buggy program
+Simple Algorithm to solve 2D matrix
